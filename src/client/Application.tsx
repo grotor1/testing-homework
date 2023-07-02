@@ -29,7 +29,7 @@ export const Application: FC = () => {
     }, [setCollapsed]);
 
     const count = Object.keys(cart).length;
-    const cartLabel = count ? `Cart (${count})` : 'Cart';
+    const cartLabel = count ? `Cart (${count + 1})` : 'Cart';
     const navbarClass = collapsed ? 'collapse navbar-collapse' : 'navbar-collapse';
 
     return <div className={bem()}>
