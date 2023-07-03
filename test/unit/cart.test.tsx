@@ -14,9 +14,10 @@ const mockedAxios = mocked(axios);
 describe('Тесты корзины', () => {
   afterEach(() => {
     mockedAxios.mockClear();
+    localStorage.clear();
   });
 
-  it('Обновление не сбрасывает корзину', async function () {
+  it('Обновление не сбрасывает корзину', function () {
     let store = initStore(new ExampleApi(basename), new CartApi());
 
     store.dispatch({type: 'ADD_TO_CART', product: elem});
@@ -28,7 +29,7 @@ describe('Тесты корзины', () => {
     expect(store.getState().cart[elem.id].count).toBe(1);
   });
 
-  it('Количество уникальных элементов показывается в навигации', async function () {
+  it('Количество уникальных элементов показывается в навигации', function () {
     let store = initStore(new ExampleApi(basename), new CartApi());
 
     const screen = appRender(
@@ -87,6 +88,7 @@ describe('Тесты корзины', () => {
 
     store.dispatch({type: 'ADD_TO_CART', product: elem});
 
+    await screen.findByTestId('address')
     await user.type(await screen.findByTestId('phone'), '123')
 
     await user.click(await screen.findByTestId('submit'))
@@ -97,7 +99,6 @@ describe('Тесты корзины', () => {
   });
 
   it('Проверка валидирования правильного ввода', async function () {
-    mockedAxios.get.mockResolvedValue({data: 123});
     let store = initStore(new ExampleApi(basename), new CartApi());
     const user = userEvent.setup();
 
@@ -112,8 +113,8 @@ describe('Тесты корзины', () => {
     await user.type(await screen.findByTestId('phone'), '89870638926')
     await user.type(await screen.findByTestId('name'), 'ыва')
 
+    mockedAxios.post.mockResolvedValue({data: {id: 123}});
     await user.click(await screen.findByTestId('submit'))
-
     await screen.findByTestId('msg');
   });
 });

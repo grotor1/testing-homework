@@ -124,7 +124,9 @@ const checkoutEpic: ExampleEpic = (action$, store$, { api }) => action$.pipe(
         }
 
         return from(api.checkout(form, cart)).pipe(
-            map(res => checkoutComplete(res.data.id)),
+            map(res => {
+                return checkoutComplete(res.data.id)
+            }),
         );
     }),
 );

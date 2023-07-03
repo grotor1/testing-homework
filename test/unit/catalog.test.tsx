@@ -14,6 +14,7 @@ const mockedAxios = mocked(axios);
 
 describe('Тесты каталога', () => {
   afterEach(() => {
+    localStorage.clear();
     mockedAxios.mockClear();
   });
 
