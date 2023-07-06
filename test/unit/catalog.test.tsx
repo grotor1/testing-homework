@@ -40,8 +40,8 @@ describe('Тесты каталога', () => {
       ['/catalog'],
     );
 
-    const title = await screen.findByText(elem.name);
-    const price = await screen.findByText('$' + elem.price);
+    const title = await screen.findAllByText(elem.name);
+    const price = await screen.findAllByText('$' + elem.price);
     const link = await screen.findByTestId('0-link-card');
     // @ts-ignore
     expect(link.href).toBe(`${window.location}catalog/${elem.id}`);
